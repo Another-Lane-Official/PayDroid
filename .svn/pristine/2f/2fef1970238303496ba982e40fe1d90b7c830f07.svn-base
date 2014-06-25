@@ -1,0 +1,300 @@
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        
+    android:id="@+id/ScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!-- price -->
+
+        <TextView
+            android:id="@+id/object_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="28sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/question_mark"
+             />
+
+        <!-- card name -->
+
+        <TextView
+            android:id="@+id/card_name_label"
+            style="@style/label_credit_card"
+            android:layout_below="@+id/object_price"
+            android:text="@string/card_name" />
+
+        <EditText
+            android:id="@+id/card_name"
+            style="@style/input_credit_card"
+            android:text="ggggggg"
+            android:layout_below="@+id/card_name_label" >
+
+            <requestFocus />
+        </EditText>
+
+        <!-- カードブランドのロゴ -->
+
+        <ImageView
+            android:id="@+id/logo_brand_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/default_content_description"
+            android:padding="0dp"
+            android:visibility="invisible" />
+
+        <!-- card number -->
+
+        <TextView
+            android:id="@+id/card_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_name"
+            android:text="@string/card_number" />
+
+        <LinearLayout
+            android:id="@+id/linear_card_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_number_label"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/old1"
+                style="@style/change_cc_number"
+                android:text="4000"
+                android:imeOptions="actionNext" >
+            </EditText>
+
+            <TextView style="@style/change_cc_separator" />
+
+            <EditText
+                android:id="@+id/old2"
+                android:text="0000"
+                style="@style/change_cc_number" >
+            </EditText>
+
+            <TextView style="@style/change_cc_separator" />
+
+            <EditText
+                android:id="@+id/old3"
+                android:text="0000"
+                style="@style/change_cc_number" >
+            </EditText>
+
+            <TextView style="@style/change_cc_separator" />
+
+            <EditText
+                android:id="@+id/old4"
+                android:text="0000"
+                style="@style/change_cc_number"
+                android:hint="@string/last_four_digit_x" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- expiration date -->
+
+        <TextView
+            android:id="@+id/period_title"
+            style="@style/label_credit_card"
+            android:layout_below="@+id/linear_card_number"
+            android:text="@string/expiration_date" />
+
+        <LinearLayout
+            android:id="@+id/linear_period"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/period_title"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/month"
+                android:text="12"
+                style="@style/change_cc_number"
+                android:hint="@string/expiration_month"
+                android:maxLength="2" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/year"
+                 android:text="16"
+                style="@style/change_cc_number"
+                android:hint="@string/expiration_year"
+                android:maxLength="2" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user name #### -->
+
+        <LinearLayout
+            android:id="@+id/user_name_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/linear_period" >
+
+            <TextView
+                android:id="@+id/user_name_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_name" />
+
+            <EditText
+                android:id="@+id/user_name"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- ####  user capital #### -->
+
+        <LinearLayout
+            android:id="@+id/user_capital_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_name_layout" >
+
+            <TextView
+                android:id="@+id/user_capital_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_capital" />
+
+            <EditText
+                android:id="@+id/user_capital"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user zip #### -->
+
+        <LinearLayout
+            android:id="@+id/user_zip_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_capital_layout" >
+
+            <TextView
+                android:id="@+id/user_zip_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_zip" />
+
+            <EditText
+                android:id="@+id/user_zip"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user adress 1 #### -->
+
+        <LinearLayout
+            android:id="@+id/user_adress1_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_zip_layout" >
+
+            <TextView
+                android:id="@+id/user_adress1_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_adress_1" />
+
+            <EditText
+                android:id="@+id/user_adress1"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user adress 2 #### -->
+
+        <LinearLayout
+            android:id="@+id/user_adress2_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_adress1_layout" >
+
+            <TextView
+                android:id="@+id/user_adress2_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_adress_2" />
+
+            <EditText
+                android:id="@+id/user_adress2"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user country #### -->
+
+        <LinearLayout
+            android:id="@+id/user_country_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_adress2_layout" >
+
+            <TextView
+                android:id="@+id/user_country_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_country" />
+
+            <EditText
+                android:id="@+id/user_country"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user mail  #### -->
+
+        <LinearLayout
+            android:id="@+id/user_mail_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_country_layout" >
+
+            <TextView
+                android:id="@+id/user_mail_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_email" />
+
+            <EditText
+                android:id="@+id/user_mail"
+                 android:text="jcanyu@alij.ne.jp"
+                style="@style/input_credit_card" >
+            </EditText>
+        </LinearLayout>
+
+        <!-- #### user phone  #### -->
+
+        <LinearLayout
+            android:id="@+id/user_phone_layout"
+            style="@style/linear_layout_credit_card_input"
+            android:layout_below="@+id/user_mail_layout" >
+
+            <TextView
+                android:id="@+id/user_phone_label"
+                style="@style/label_credit_card"
+                android:text="@string/user_tel" />
+
+            <EditText
+                android:id="@+id/user_phone"
+                style="@style/input_credit_card" />
+        </LinearLayout>
+
+        <!-- settlement button -->
+
+        <Button
+            android:id="@+id/settlement_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_phone_layout"
+            android:text="@string/settlement_button" />
+
+        <!-- cancel button -->
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settlement_button"
+            android:text="@string/cancel_button" />
+    </RelativeLayout>
+
+</ScrollView>

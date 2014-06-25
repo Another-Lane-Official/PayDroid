@@ -1,0 +1,349 @@
+package jp.alij.paydroid.activities;
+
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
+import jp.alij.paydroid.R;
+import jp.alij.paydroid.common.Consts;
+import jp.alij.paydroid.common.InputStatus;
+import jp.alij.paydroid.data.TransactionRequest;
+import jp.alij.paydroid.data.TransactionResult;
+import jp.alij.paydroid.data.ValidTransactionRequest;
+import jp.alij.paydroid.data.ValidTransactionRequestResult;
+import jp.alij.paydroid.listeners.OnClickCancel;
+import jp.alij.paydroid.listeners.OnClickSettlement;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+/**
+ * アナザーレーン（株）
+ * http://www.alij.ne.jp
+ * @author canu johann
+ * @version　1.0
+ * 
+ * アンドロイドアプリ向けの決済システム(gateway)APKです。
+ * 都度決済のみ（継続未対応）
+ * クイックチャージ未対応
+ * 
+ * このプロジェクトをそのままご利用をいただきますが、
+ * 弊社は責任を負いかねますので、あらかじめご了承願います。
+ * 
+ */
+public class PaymentActivity extends Activity {
+
+	//トランザクション情報(サイトID、サイトパス、金額)
+	public TransactionRequest tr;
+	
+	//linearLayout
+	private LinearLayout userNameLayout, userCapitalLayout, userZipLayout,
+			userAdr1Layout, userAdr2Layout, userCountryLayout, userMailLayout,
+			userPhoneLayout;
+	
+	//TextViews
+	public TextView userNameText, userCapitalText,userZipText,userAdr1Text,
+			userAdr2Text, userCountryText,userMailText,userPhoneText,cardName, 
+			cardNo1, cardNo2, cardNo3, cardNo4,cardExpYear,cardExpMonth,objectPrice;
+	
+	//EditText
+	public EditText userNameEdit, userCapitalEdit,userZipEdit,userAdr1Edit,
+					userAdr2Edit, userCountryEdit,userMailEdit,userPhoneEdit;
+	
+	//ボタン（決済+キャンセル）
+	private Button submit,cancel;
+	
+	//MainUIのhandler
+	public Handler asyncHandler;
+	
+	//必須項目
+	public ArrayList<EditText> mandatoriesFields;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_payment);
+
+		//indentの存在チェック
+		validateIndent(); 
+		
+		//indentのデータ+クイックチャージ情報をチェック
+		ValidTransactionRequestResult result = ValidTransactionRequest.valid(this,tr);
+		
+		switch (result.getState()) {
+
+		case OK: //問題なし
+			
+			//Viewsの初期化
+			setWidgets();
+			
+			//必須項目に【必須】を追加
+			setMandatoryInputs();
+			
+			//表示/非表示
+			updateTemplateViews();
+			
+			//ボタンのクリック処理
+			setOnclickButton(); 
+			
+			break;
+			
+		case NG: //indentデーター:不備あり
+			Toast.makeText(this, result.getMessage(), Toast.LENGTH_SHORT).show();
+			finish();
+			break;
+		}		
+		
+		//決済完了と決済中止の結果を処理
+		asyncHandler = new Handler(){
+			
+			@SuppressLint("HandlerLeak")    
+			public void handleMessage(Message msg){
+		        super.handleMessage(msg);
+		       
+		        switch (msg.what) {
+		        
+		        	case Consts.ASYNC_HANDLER_SUCCESS:	//決済ボタン
+		            	
+		            	//情報取得
+		            	Bundle bundle = msg.getData();
+		            	String result = bundle.getString(Consts.RESULT_BUNDLE) ;
+		            	TransactionResult res = (TransactionResult) new Gson().fromJson(result, TransactionResult.class);
+		            	
+		            	if (res!=null && res.getState() == Consts.RESPONSE_STATE_DATA_SUCCESS ){	//決済成功
+		            		
+		            		//broadcast送信
+		            		Intent intent = new Intent();
+		    				intent.setAction(Consts.RESPONSE_PAYMENT);
+		    				intent.putExtra(Consts.RESPONSE_MSG_DATA, res.getMsg());
+		    				intent.putExtra(Consts.RESPONSE_STATE_DATA, res.getState());
+		    				sendBroadcast(intent);
+		    				
+		    				//元のアプリへ
+		    				finish();
+		            		
+		            	}else{	//決済失敗
+		            		Toast.makeText(getApplicationContext(), res.getMsg(), Toast.LENGTH_LONG).show();
+		            	}
+		            	
+		                break; 
+		            
+		            case Consts.ASYNC_HANDLER_CANCEL:	//キャンセルボタン
+		            	
+		            	//メッセージを表示
+		            	Toast.makeText(getApplicationContext(),getString(R.string.settlement_canceled), Toast.LENGTH_LONG).show();
+	            		
+	            		//broadcast送信
+	            		Intent intent = new Intent();
+	            		intent.setAction(Consts.RESPONSE_PAYMENT);
+	            		intent.putExtra(Consts.RESPONSE_STATE_DATA, Consts.RESPONSE_STATE_DATA_CANCEL);
+	            		sendBroadcast(intent);
+	            		
+	            		//元のアプリへ
+	            		finish();
+	            		
+		            	break;
+		        }
+		    }
+		};  
+
+	}
+
+	/*
+	 * Viewsの初期化
+	 */
+	private void setWidgets() {
+
+		// Get all layout
+		userNameLayout = (LinearLayout) findViewById(R.id.user_name_layout);
+		userCapitalLayout = (LinearLayout) findViewById(R.id.user_capital_layout);
+		userZipLayout = (LinearLayout) findViewById(R.id.user_zip_layout);
+		userAdr1Layout = (LinearLayout) findViewById(R.id.user_adress1_layout);
+		userAdr2Layout = (LinearLayout) findViewById(R.id.user_adress2_layout);
+		userCountryLayout = (LinearLayout) findViewById(R.id.user_country_layout);
+		userMailLayout = (LinearLayout) findViewById(R.id.user_mail_layout);
+		userPhoneLayout = (LinearLayout) findViewById(R.id.user_phone_layout);
+		
+		//TextView
+		userNameText = (TextView) findViewById(R.id.user_name_label);
+		userCapitalText = (TextView) findViewById(R.id.user_capital_label);
+		userZipText = (TextView) findViewById(R.id.user_zip_label);
+		userAdr1Text = (TextView) findViewById(R.id.user_adress1_label);
+		userAdr2Text = (TextView) findViewById(R.id.user_adress2_label);
+		userCountryText = (TextView) findViewById(R.id.user_country_label);
+		userMailText = (TextView) findViewById(R.id.user_mail_label);
+		userPhoneText = (TextView) findViewById(R.id.user_phone_label);
+		
+		cardName= (TextView) findViewById(R.id.card_name);
+		cardNo1= (TextView) findViewById(R.id.old1);
+		cardNo2= (TextView) findViewById(R.id.old2);
+		cardNo3= (TextView) findViewById(R.id.old3);
+		cardNo4= (TextView) findViewById(R.id.old4);
+		cardExpYear= (TextView) findViewById(R.id.year);
+		cardExpMonth= (TextView) findViewById(R.id.month);
+		
+		objectPrice = (TextView) findViewById(R.id.object_price);
+		
+		//EditView
+		userNameEdit = (EditText) findViewById(R.id.user_name);
+		userCapitalEdit = (EditText) findViewById(R.id.user_capital);
+		userZipEdit = (EditText) findViewById(R.id.user_zip);
+		userAdr1Edit = (EditText) findViewById(R.id.user_adress1);
+		userAdr2Edit = (EditText) findViewById(R.id.user_adress2);
+		userCountryEdit = (EditText) findViewById(R.id.user_country);
+		userMailEdit = (EditText) findViewById(R.id.user_mail);
+		userPhoneEdit = (EditText) findViewById(R.id.user_phone);
+		
+		submit = (Button) findViewById(R.id.settlement_button);
+		cancel = (Button) findViewById(R.id.cancel_button);
+
+	}
+	
+	/*
+	 * 必須項目を配列に追加
+	 */
+	private void setMandatoryInputs(){
+		
+		//クイックチャージの場合はバリデーション不要
+		if(tr.getIsQuickCharge()){ return;}
+				
+		//名前
+		if (isMandatory(tr.getVisibility_name())){
+			addMandatoryMark(userNameText) ;
+			addToMandatoriesFiels(userNameEdit);
+		};
+		
+		//住所１
+		if (isMandatory(tr.getVisibility_adr1())){
+			addMandatoryMark(userAdr1Text) ;
+			addToMandatoriesFiels(userAdr1Edit);
+		};
+			
+		//住所2
+		if (isMandatory(tr.getVisibility_adr2())){
+			addMandatoryMark(userAdr2Text) ;
+			addToMandatoriesFiels(userAdr2Edit);
+		};
+		
+		//都市
+		if (isMandatory(tr.getVisibility_capital())){
+			addMandatoryMark(userCapitalText) ;
+			addToMandatoriesFiels(userCapitalEdit);
+		};
+		
+		//国
+		if (isMandatory(tr.getVisibility_country())){
+			addMandatoryMark(userCountryText) ;
+			addToMandatoriesFiels(userCountryEdit);
+		};
+		
+		//メールアドレス
+		if (isMandatory(tr.getVisibility_mail())){
+			addMandatoryMark(userMailText) ;
+			addToMandatoriesFiels(userMailEdit);
+		};
+		
+		//電話番号
+		if (isMandatory(tr.getVisibility_tel())){
+			addMandatoryMark(userPhoneText) ;
+			addToMandatoriesFiels(userPhoneEdit);
+		};
+		
+		//郵便番号
+		if (isMandatory(tr.getVisibility_zip())){
+			addMandatoryMark(userZipText) ; 
+			addToMandatoriesFiels(userZipEdit);	
+		};
+	}
+	
+	/*
+	 * INPUT_STATUS_NOT_USEDのもの以外は表示
+	 */
+	private boolean display(int a){
+		return (a != InputStatus.INPUT_STATUS_NOT_USED) ;
+	}
+	
+	/*
+	 * 項目の必須性チェック
+	 */
+	private boolean isMandatory(int tv){
+		return (tv == InputStatus.INPUT_STATUS_MANDATORY) ;
+	}
+	
+	/*
+	 * 必須項目に【必須】ラベルを追加
+	 */
+	private void addMandatoryMark(TextView tv){
+		tv.setText(Html.fromHtml(tv.getText() + " 【必須項目】 "));
+	}
+
+	/*
+	 * 項目の表示・非表示
+	 */
+	private void updateTemplateViews() {
+		
+		//クイックチャージの場合はバリデーション不要
+		if(tr.getIsQuickCharge()){ return;}
+
+		//任意項目の表示・非表示設定
+		userNameLayout.setVisibility( (display(tr.getVisibility_name())) ? View.VISIBLE: View.GONE);
+		userCapitalLayout.setVisibility((display(tr.getVisibility_capital())) ? View.VISIBLE: View.GONE);
+		userZipLayout.setVisibility((display(tr.getVisibility_zip())) ? View.VISIBLE: View.GONE);
+		userAdr1Layout.setVisibility((display(tr.getVisibility_adr1())) ? View.VISIBLE: View.GONE);
+		userAdr2Layout.setVisibility((display(tr.getVisibility_adr2())) ? View.VISIBLE: View.GONE);
+		userCountryLayout.setVisibility((display(tr.getVisibility_country())) ? View.VISIBLE: View.GONE);
+		userMailLayout.setVisibility((display(tr.getVisibility_mail())) ? View.VISIBLE: View.GONE);
+		userPhoneLayout.setVisibility((display(tr.getVisibility_tel())) ? View.VISIBLE: View.GONE);
+		
+		//値段
+		objectPrice.setText(String.valueOf(tr.getAmount()) + "円");
+
+	}
+	
+
+	
+	/*
+	 * indentのデータバリデーション
+	 */
+	private void validateIndent() {
+
+		Intent i = getIntent();
+		tr = i.getParcelableExtra(Consts.TRANSACTION_INDENT);
+
+		//情報が入っていない場合はエラー
+		if (tr == null) {
+			Toast.makeText(this, getString(R.string.need_indent), Toast.LENGTH_SHORT).show();
+			finish();
+		}
+	}
+	
+	/*
+	 * onclickのlistenerを設定
+	 */
+	private void setOnclickButton(){
+		submit.setOnClickListener(new OnClickSettlement(this));
+		cancel.setOnClickListener(new OnClickCancel(this));
+	}
+	
+	//必須項目を追加
+	private void addToMandatoriesFiels(EditText et){
+		if(mandatoriesFields==null){mandatoriesFields = new ArrayList<EditText>();}		
+		mandatoriesFields.add(et);
+	}
+	
+	public ArrayList<EditText> getMandoriesFields(){
+		return mandatoriesFields;
+	}
+
+}

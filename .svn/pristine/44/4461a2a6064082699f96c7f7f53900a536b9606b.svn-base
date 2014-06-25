@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">payDroid</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    
+    <!-- settlement screen -->
+    <string name="card_name">カート名義</string>
+    <string name="card_number">カード番号</string>
+    <string name="four_digit_x">xxxx</string>
+    <string name="last_four_digit_x">xx(xx)</string>
+    <string name="expiration_date">有効期限</string>
+    <string name="expiration_month">月(2桁)</string>
+    <string name="expiration_year">年（2桁）</string>
+    <string name="user_name">お名前</string>
+    <string name="user_capital">capital</string>
+    <string name="user_zip">郵便番号</string>
+    <string name="user_adress_1">住所1</string>
+    <string name="user_adress_2">住所2</string>
+    <string name="user_country">国</string>
+    <string name="user_email">メールアドレス</string>
+    <string name="user_tel">お電話番号</string>
+    <string name="settlement_button">決済</string>
+    <string name="cancel_button">戻る</string>
+    
+    <string name="default_content_description">Image content description</string>
+    <string name="question_mark">？</string>
+    
+    <string name="mandatory_parameters_issue">必須パラメータをご記入ください。</string>
+    
+    <string name="data_not_correct_issue">カード情報を入力してください。</string>
+    <string name="expiration_date_issue">有効期限が正しくありません。</string>
+    <string name="expiration_date_wrong_issue">有効期限が正しくありません。</string>
+    <string name="card_number_issue"> カード番号は正しくありません。</string>
+    <string name="error_issue"> エラーが発生しました。</string>
+    <string name="under_process">データ処理中</string>
+    <string name="site_info_needed">加盟店情報が入っておりません。</string>
+    <string name="need_indent">indentが入っておりません。</string>
+    <string name="settlement_canceled">決済が中止されました。</string>
+    
+    
+</resources>
