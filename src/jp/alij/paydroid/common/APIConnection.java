@@ -57,8 +57,6 @@ public class APIConnection {
 	public final static String LANGUAGE_PARAM = "country";
 	public final static String OTHER_PARAM = "other";
 	
-	
-	
 	/*
 	 * åàçœé¿çs
 	 */
@@ -66,6 +64,11 @@ public class APIConnection {
 		String url = Consts.API_SETTLEMENT_URI;		
 		return queryAPIByPost(url,mapConditions);
 	}
+	
+	public String changeQuickChargeUser(HashMap<String, String> mapConditions){
+		String url = Consts.API_QUICK_CHARGE_CHANGE_URI;		
+		return queryAPIByPost(url,mapConditions);
+	}	
 	
 	
 	/*

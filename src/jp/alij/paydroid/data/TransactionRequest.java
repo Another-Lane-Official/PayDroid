@@ -19,6 +19,7 @@ public class TransactionRequest implements Parcelable {
 	public String sitePass;	
 	public int amount;
 	
+	//quickチャージ
 	public Boolean isQuickCharge=false;
 	
 	//任意項目
@@ -38,8 +39,13 @@ public class TransactionRequest implements Parcelable {
 	public int visibility_mail;
 	public int visibility_country;	
 	public int visibility_tel;
-
-
+	
+	//クイックチャージで利用
+	public String cardName;
+	public String cardNo;
+	public String cardMonth;
+	public String cardYear;
+	
 	public TransactionRequest() {}
 	
 	public TransactionRequest(Parcel in) {
@@ -75,6 +81,12 @@ public class TransactionRequest implements Parcelable {
 		dest.writeInt(this.visibility_country);
 		dest.writeInt(this.visibility_tel);
 
+		dest.writeString(this.cardName);
+		dest.writeString(this.cardNo);
+		dest.writeString(this.cardMonth);
+		dest.writeString(this.cardYear);
+	
+		
 	}
 
 	private void readFromParcel(Parcel in) {
@@ -99,6 +111,12 @@ public class TransactionRequest implements Parcelable {
 		this.visibility_mail = in.readInt();
 		this.visibility_country = in.readInt();
 		this.visibility_tel = in.readInt();
+		
+		this.cardName = in.readString();
+		this.cardNo = in.readString();
+		this.cardMonth = in.readString();
+		this.cardYear = in.readString();
+
 		
 	}
 
@@ -258,9 +276,36 @@ public class TransactionRequest implements Parcelable {
 		this.isQuickCharge = isQuickCharge;
 	}
 
+	public String getCardName() {
+		return cardName;
+	}
 
-	
-	
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
 
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+
+	public String getCardMonth() {
+		return cardMonth;
+	}
+
+	public void setCardMonth(String cardMonth) {
+		this.cardMonth = cardMonth;
+	}
+
+	public String getCardYear() {
+		return cardYear;
+	}
+
+	public void setCardYear(String cardYear) {
+		this.cardYear = cardYear;
+	}
 	
 }

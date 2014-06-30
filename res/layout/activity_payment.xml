@@ -277,6 +277,7 @@
                 android:id="@+id/user_phone"
                 style="@style/input_credit_card" />
         </LinearLayout>
+        
 
         <!-- settlement button -->
 

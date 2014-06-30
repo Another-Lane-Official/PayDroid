@@ -34,7 +34,7 @@ import android.widget.Toast;
  * 決済画面の【決済】ボタンクリック処理
  *
  */
-public class OnClickSettlement implements OnClickListener, DialogInterface.OnClickListener {
+public class OnClickSettlement implements OnClickListener {
 
 	public PaymentActivity mActivity;
 	public String fullCard,month,year,name;
@@ -150,7 +150,7 @@ public class OnClickSettlement implements OnClickListener, DialogInterface.OnCli
 			@Override
 			public void onSuccess() {
 				
-				dialog = new CustomDialog((Activity) mActivity,false,OnClickSettlement.this);
+				dialog = new CustomDialog((Activity) mActivity,false);
 				dialog.show();
 				
 				//networkを利用するため、別のthreadでデータを処理します
@@ -186,11 +186,6 @@ public class OnClickSettlement implements OnClickListener, DialogInterface.OnCli
 	private void displayError(String msg) {
 		Toast.makeText(mActivity.getApplicationContext(), msg,
 				Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		// TODO Auto-generated method stub		
 	}
 
 }

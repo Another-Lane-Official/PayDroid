@@ -16,7 +16,7 @@ import android.content.DialogInterface;
  */
 public class CustomDialog  extends ProgressDialog {
 	
-	public CustomDialog(Context context,boolean cancel,DialogInterface.OnClickListener listener) {
+	public CustomDialog(Context context,boolean cancel) {
 		super(context);
 		setMessage(context.getString(R.string.under_process));
 		setCancelable(false);

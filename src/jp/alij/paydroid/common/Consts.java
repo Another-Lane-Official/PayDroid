@@ -10,8 +10,10 @@ package jp.alij.paydroid.common;
  */
 public class Consts {
 	
-	public static final String API_ROOT = "http://192.168.1.68:4567/";
+	public static final String API_ROOT = "http://android.alij.ne.jp/";
 	public static final String API_SETTLEMENT_URI = API_ROOT + "do_settlement";
+	public static final String API_QUICK_CHARGE_CHANGE_URI = API_ROOT + "quick_charge_change";
+	
 	public static final String TRANSACTION_INDENT = "transaction_indent";
 	public static final String RESPONSE_PAYMENT = "another_lane_response_settlement" ;
 	public static final String RESPONSE_MSG_DATA = "msg" ;
