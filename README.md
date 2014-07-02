@@ -152,10 +152,10 @@ PayDroid方式では、テキストとして決済結果情報を返信します
 
 ```
 #gitでダウンロードする場合は
-git clone https://github.com/Another-Lane-Official/paydroid-sdk.git
+git clone https://github.com/Another-Lane-Official/PayDroid.git
 
 #gitがインストールされていない場合
-[コチラ](https://github.com/Another-Lane-Official/paydroid-sdk)からダウンロード
+https://github.com/Another-Lane-Official/PayDroid.git からダウンロード
 ```
 
 #####  ライブラリー追加(*1)
