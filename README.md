@@ -53,7 +53,7 @@
 
 ### ご注意
 
-* Androidアプリ専用のDSKとなります。
+* Androidアプリ専用のSDKとなります。
 * Eclipseユーザー向けの仕様書となります。
 * 実装サンプールは[こちら](https://github.com/Another-Lane-Official/PayDroid-sample)にあります。
 
