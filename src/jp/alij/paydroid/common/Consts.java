@@ -18,6 +18,7 @@ public class Consts {
 	public static final String RESPONSE_PAYMENT = "another_lane_response_settlement" ;
 	public static final String RESPONSE_MSG_DATA = "msg" ;
 	public static final String RESPONSE_STATE_DATA = "state" ;
+	public static final String RESPONSE_DATA = "another-lane-response_data" ;
 	
 	public static final String RESULT_BUNDLE = "result";
 	
@@ -29,6 +30,8 @@ public class Consts {
 	public static final int RESPONSE_STATE_DATA_SUCCESS = 1; 
 	public static final int RESPONSE_STATE_DATA_ERROR = 2; 
 	public static final int RESPONSE_STATE_DATA_CANCEL = -101; 
+	
+	
 	
 
 }

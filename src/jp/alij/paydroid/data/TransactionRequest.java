@@ -20,17 +20,16 @@ public class TransactionRequest implements Parcelable {
 	public int amount;
 	
 	//quickチャージ
-	public Boolean isQuickCharge=false;
+	public int quickChargeStatus;
 	
 	//任意項目
 	public String customerId;
 	public String customerPass;
-	public String visibility_note;
-	public String visibility_transactionId;
-	public String visibility_ipAdr;
+	public String note;
+	public String transactionId;
+	public String itemId;
 	
 	//ユーザー情報の表示・非表示
-	public int visibility_itemId;
 	public int visibility_zip;	
 	public int visibility_capital;
 	public int visibility_adr1;
@@ -60,18 +59,18 @@ public class TransactionRequest implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		
-		dest.writeByte((byte) (this.isQuickCharge ? 1 : 0));
+		dest.writeInt(this.quickChargeStatus);
 
 		dest.writeString(this.siteId);
 		dest.writeString(this.sitePass);
 		dest.writeString(this.customerId);
 		dest.writeString(this.customerPass);
-		dest.writeString(this.visibility_note);
-		dest.writeString(this.visibility_transactionId);
-		dest.writeString(this.visibility_ipAdr);
+		dest.writeString(this.note);
+		dest.writeString(this.transactionId);
+		dest.writeString(this.itemId);
 		
 		dest.writeInt(this.amount);
-		dest.writeInt(this.visibility_itemId);
+
 		dest.writeInt(this.visibility_zip);
 		dest.writeInt(this.visibility_capital);
 		dest.writeInt(this.visibility_adr1);
@@ -91,18 +90,18 @@ public class TransactionRequest implements Parcelable {
 
 	private void readFromParcel(Parcel in) {
 		
-		this.isQuickCharge = in.readByte() != 0;
+		this.quickChargeStatus = in.readInt();
 		
 		this.siteId = in.readString();
 		this.sitePass = in.readString();
 		this.customerId = in.readString();
 		this.customerPass = in.readString();
-		this.visibility_note = in.readString();
-		this.visibility_transactionId = in.readString();
-		this.visibility_ipAdr = in.readString();
+		this.note = in.readString();
+		this.transactionId = in.readString();
+		this.itemId = in.readString();
 		
 		this.amount = in.readInt();		
-		this.visibility_itemId = in.readInt();
+		
 		this.visibility_zip = in.readInt();
 		this.visibility_capital = in.readInt();
 		this.visibility_adr1 = in.readInt();
@@ -171,39 +170,7 @@ public class TransactionRequest implements Parcelable {
 	public void setCustomerPass(String customerPass) {
 		this.customerPass = customerPass;
 	}
-
-	public String getVisibility_note() {
-		return visibility_note;
-	}
-
-	public void setVisibility_note(String visibility_note) {
-		this.visibility_note = visibility_note;
-	}
-
-	public String getVisibility_transactionId() {
-		return visibility_transactionId;
-	}
-
-	public void setVisibility_transactionId(String visibility_transactionId) {
-		this.visibility_transactionId = visibility_transactionId;
-	}
-
-	public String getVisibility_ipAdr() {
-		return visibility_ipAdr;
-	}
-
-	public void setVisibility_ipAdr(String visibility_ipAdr) {
-		this.visibility_ipAdr = visibility_ipAdr;
-	}
-
-	public int getVisibility_itemId() {
-		return visibility_itemId;
-	}
-
-	public void setVisibility_itemId(int visibility_itemId) {
-		this.visibility_itemId = visibility_itemId;
-	}
-
+	
 	public int getVisibility_zip() {
 		return visibility_zip;
 	}
@@ -268,14 +235,6 @@ public class TransactionRequest implements Parcelable {
 		this.visibility_tel = visibility_tel;
 	}
 
-	public Boolean getIsQuickCharge() {
-		return isQuickCharge;
-	}
-
-	public void setIsQuickCharge(Boolean isQuickCharge) {
-		this.isQuickCharge = isQuickCharge;
-	}
-
 	public String getCardName() {
 		return cardName;
 	}
@@ -306,6 +265,38 @@ public class TransactionRequest implements Parcelable {
 
 	public void setCardYear(String cardYear) {
 		this.cardYear = cardYear;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getQuickChargeStatus() {
+		return quickChargeStatus;
+	}
+
+	public void setQuickChargeStatus(int quickChargeStatus) {
+		this.quickChargeStatus = quickChargeStatus;
 	}
 	
 }

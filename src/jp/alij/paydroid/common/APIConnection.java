@@ -55,7 +55,7 @@ public class APIConnection {
 	public final static String NOTE_PARAM = "note";
 	public final static String TRANS_ID_PARAM = "TransactionId";
 	public final static String LANGUAGE_PARAM = "country";
-	public final static String OTHER_PARAM = "other";
+	public final static String ITEM_ID_PARAM = "item_id";
 	
 	/*
 	 * 決済実行
@@ -92,8 +92,7 @@ public class APIConnection {
 			if(pairs.getValue()!=null && pairs.getValue()!= "")
 			params.add(new BasicNameValuePair(pairs.getKey().toString(), pairs.getValue().toString()));
 		}
-		
-		
+				
 		try {
 			
 			//リクエスト送信
@@ -107,11 +106,11 @@ public class APIConnection {
 			return reader.readLine();
 		
 		} catch (ClientProtocolException e) {
-			Log.e(TAG, "Client protocol exception occurred when calling API.");
+			Log.e(TAG, "Client protocol exception occurred when calling Another Lane API.");
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			Log.e(TAG, "API is unreachable. Please check it.");
+			Log.e(TAG, "Another Lane API is unreachable. Please check it.");
 			e.printStackTrace();
 			return null;
 		}

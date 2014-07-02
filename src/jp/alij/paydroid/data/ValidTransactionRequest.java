@@ -2,6 +2,7 @@ package jp.alij.paydroid.data;
 
 
 import jp.alij.paydroid.R;
+import jp.alij.paydroid.common.QuickChargeStatus;
 import android.app.Activity;
 
 /**
@@ -41,7 +42,7 @@ public class ValidTransactionRequest {
 	 * クイックチャージの場合はcustomerIDをチェック
 	 */
 	public static boolean validQuickCharge(TransactionRequest tr){
-		return ( !tr.getIsQuickCharge() || (tr.getIsQuickCharge() && tr.getCustomerId()!=null)  );
+		return ( tr.getQuickChargeStatus() == QuickChargeStatus.NO_QUICK_CHARGE || tr.getCustomerId() !=null );
 	}
 
 }
