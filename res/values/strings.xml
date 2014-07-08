@@ -19,13 +19,14 @@
     <string name="expiration_month">月(2桁)</string>
     <string name="expiration_year">年（2桁）</string>
     <string name="user_name">お名前</string>
-    <string name="user_capital">capital</string>
+    <string name="user_capital">都道府県</string>
     <string name="user_zip">郵便番号</string>
     <string name="user_adress_1">住所1</string>
     <string name="user_adress_2">住所2</string>
     <string name="user_country">国</string>
     <string name="user_email">メールアドレス</string>
     <string name="user_tel">お電話番号</string>
+    <string name="user_note">参考</string>
     <string name="settlement_button">決済</string>
     <string name="cancel_button">戻る</string>
     
@@ -43,6 +44,18 @@
     <string name="site_info_needed">加盟店情報が入っておりません。</string>
     <string name="need_indent">indentが入っておりません。</string>
     <string name="settlement_canceled">決済が中止されました。</string>
+    <string name="provided_by_another_lane">Provided by Another Lane Inc</string>
     
+     <!-- hints -->
+    <string name="zip_hint">xxx-xxxx</string>
+    <string name="name_hint">山田昌平</string>
+    <string name="name_card_hint">YAMADA SHOUHEI</string>
+    <string name="capital_hint">東京都</string>
+    <string name="adr1_hint">新宿区西新宿</string>
+    <string name="adr2_hint">1丁目　2-3</string>
+    <string name="country_hint">日本</string>
+    <string name="email_hint">your-email@your-host.com</string>
+    <string name="note_hint">メモ用</string>
+    <string name="phone_hint">xxx-xxxx-xxxx</string>
     
 </resources>

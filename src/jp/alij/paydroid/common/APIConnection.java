@@ -45,7 +45,7 @@ public class APIConnection {
 	
 	public final static String CUST_ID_PARAM = "CustomerId";
 	public final static String CUST_PASS_PARAM = "CustomerId";
-	public final static String ZIP_PARAM = "CustomerId";
+	public final static String ZIP_PARAM = "zip";
 	public final static String CAPITAL_PARAM = "capital";
 	public final static String ADR1_PARAM = "adr1";
 	public final static String ADR2_PARAM = "adr2";
@@ -54,7 +54,7 @@ public class APIConnection {
 	public final static String MAIL_PARAM = "mail";
 	public final static String NOTE_PARAM = "note";
 	public final static String TRANS_ID_PARAM = "TransactionId";
-	public final static String LANGUAGE_PARAM = "country";
+	public final static String COUNTRY_PARAM = "country";
 	public final static String ITEM_ID_PARAM = "item_id";
 	
 	/*

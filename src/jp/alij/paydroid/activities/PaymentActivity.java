@@ -50,17 +50,17 @@ public class PaymentActivity extends Activity {
 	// linearLayout
 	private LinearLayout userNameLayout, userCapitalLayout, userZipLayout,
 			userAdr1Layout, userAdr2Layout, userCountryLayout, userMailLayout,
-			userPhoneLayout;
+			userPhoneLayout, userNoteLayout;
 
 	// TextViews
 	public TextView userNameText, userCapitalText, userZipText, userAdr1Text,
 			userAdr2Text, userCountryText, userMailText, userPhoneText,
 			cardName, cardNo1, cardNo2, cardNo3, cardNo4, cardExpYear,
-			cardExpMonth, objectPrice;
+			cardExpMonth, objectPrice, userNoteText,objectName;
 
 	// EditText
 	public EditText userNameEdit, userCapitalEdit, userZipEdit, userAdr1Edit,
-			userAdr2Edit, userCountryEdit, userMailEdit, userPhoneEdit;
+			userAdr2Edit, userCountryEdit, userMailEdit, userPhoneEdit, userNoteEdit;
 
 	// ボタン（決済+キャンセル）
 	private Button submit, cancel;
@@ -87,19 +87,19 @@ public class PaymentActivity extends Activity {
 
 		case OK: // 問題なし
 
-			// Viewsの初期化
-			setWidgets();
-
+			setWidgets();		// Viewsの初期化
+			setPriceAndName();	//値段+商品名の表示
+			setOnclickButton();	// ボタンのクリック処理
+			
 			// クイックチャージの場合は不要
-			if (tr.getQuickChargeStatus() == QuickChargeStatus.QUICK_CHARGE_SECOND_TIME_AND_MORE) {
+			if (tr.getQuickChargeStatus() != QuickChargeStatus.QUICK_CHARGE_SECOND_TIME_AND_MORE) {
 				// 必須項目に【必須】を追加
 				setMandatoryInputs();
 				// 表示/非表示
 				updateTemplateViews();
 			}
 			
-			// ボタンのクリック処理
-			setOnclickButton();
+			
 
 			break;
 
@@ -120,32 +120,37 @@ public class PaymentActivity extends Activity {
 
 				case Consts.ASYNC_HANDLER_SUCCESS:// 決済ボタン
 
-					// 情報取得
-					Bundle bundle = msg.getData();
-					String result = bundle.getString(Consts.RESULT_BUNDLE);
+					try{
+						
+						Bundle bundle = msg.getData();
+						String result = bundle.getString(Consts.RESULT_BUNDLE);
+						
+						if(result.equals("")){
+							Toast.makeText(getApplicationContext(), "決済が確定されておりません。もう一度お願いします。", Toast.LENGTH_LONG).show();
+							return;
+						}
+						
+						//String(json)をオブジェクト化
+						TransactionResult res = (TransactionResult) new Gson().fromJson(result, TransactionResult.class);
+	
+						if (res != null	&& res.getState() == Consts.RESPONSE_STATE_DATA_SUCCESS) { // 決済成功
+	
+							// broadcast送信
+							Intent intent = new Intent();
+							intent.setAction(Consts.RESPONSE_PAYMENT);
+							intent.putExtra(Consts.RESPONSE_DATA, res);
+							sendBroadcast(intent);
+	
+							// 元のアプリへ
+							finish();
+	
+						} else { // 決済失敗
+							Toast.makeText(getApplicationContext(), res.getMsg(),Toast.LENGTH_LONG).show();
+						}
 					
-					if(result.equals("")){
-						Toast.makeText(getApplicationContext(), "決済が確定されておりません。もう一度お願いします。", Toast.LENGTH_LONG).show();
-						return;
-					}
-					
-					//String(json)をオブジェクト化
-					TransactionResult res = (TransactionResult) new Gson().fromJson(result, TransactionResult.class);
-
-					if (res != null	&& res.getState() == Consts.RESPONSE_STATE_DATA_SUCCESS) { // 決済成功
-
-						// broadcast送信
-						Intent intent = new Intent();
-						intent.setAction(Consts.RESPONSE_PAYMENT);
-						intent.putExtra(Consts.RESPONSE_DATA, res);
-						sendBroadcast(intent);
-
-						// 元のアプリへ
-						finish();
-
-					} else { // 決済失敗
-						Toast.makeText(getApplicationContext(), res.getMsg(),
-								Toast.LENGTH_LONG).show();
+					}catch(Exception e){
+						e.printStackTrace();
+						Toast.makeText(getApplicationContext(), "エラーが発生しました。",Toast.LENGTH_LONG).show();
 					}
 
 					break;
@@ -153,9 +158,7 @@ public class PaymentActivity extends Activity {
 				case Consts.ASYNC_HANDLER_CANCEL: // キャンセルボタン
 
 					// メッセージを表示
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.settlement_canceled),
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),getString(R.string.settlement_canceled),Toast.LENGTH_LONG).show();
 
 					// broadcast送信
 					sendBroadcastCancelSettlement();
@@ -184,6 +187,7 @@ public class PaymentActivity extends Activity {
 		userCountryLayout = (LinearLayout) findViewById(R.id.user_country_layout);
 		userMailLayout = (LinearLayout) findViewById(R.id.user_mail_layout);
 		userPhoneLayout = (LinearLayout) findViewById(R.id.user_phone_layout);
+		userNoteLayout = (LinearLayout) findViewById(R.id.user_note_layout);
 
 		// TextView
 		userNameText = (TextView) findViewById(R.id.user_name_label);
@@ -194,6 +198,7 @@ public class PaymentActivity extends Activity {
 		userCountryText = (TextView) findViewById(R.id.user_country_label);
 		userMailText = (TextView) findViewById(R.id.user_mail_label);
 		userPhoneText = (TextView) findViewById(R.id.user_phone_label);
+		userNoteText = (TextView) findViewById(R.id.user_note_label);
 
 		cardName = (TextView) findViewById(R.id.card_name);
 		cardNo1 = (TextView) findViewById(R.id.old1);
@@ -204,6 +209,8 @@ public class PaymentActivity extends Activity {
 		cardExpMonth = (TextView) findViewById(R.id.month);
 
 		objectPrice = (TextView) findViewById(R.id.object_price);
+		objectName = (TextView) findViewById(R.id.object_name);
+		
 
 		// EditView
 		userNameEdit = (EditText) findViewById(R.id.user_name);
@@ -214,6 +221,7 @@ public class PaymentActivity extends Activity {
 		userCountryEdit = (EditText) findViewById(R.id.user_country);
 		userMailEdit = (EditText) findViewById(R.id.user_mail);
 		userPhoneEdit = (EditText) findViewById(R.id.user_phone);
+		userNoteEdit = (EditText) findViewById(R.id.user_note);
 
 		submit = (Button) findViewById(R.id.settlement_button);
 		cancel = (Button) findViewById(R.id.cancel_button);
@@ -272,6 +280,13 @@ public class PaymentActivity extends Activity {
 			addMandatoryMark(userZipText);
 			addToMandatoriesFiels(userZipEdit);
 		}
+		
+		// 郵便番号
+		if (isMandatory(tr.getVisibility_note())) {
+			addMandatoryMark(userNoteText);
+			addToMandatoriesFiels(userNoteEdit);
+		}
+		
 	}
 
 	/*
@@ -301,34 +316,27 @@ public class PaymentActivity extends Activity {
 	private void updateTemplateViews() {
 
 		// 任意項目の表示・非表示設定
-		userNameLayout
-				.setVisibility((display(tr.getVisibility_name())) ? View.VISIBLE
-						: View.GONE);
-		userCapitalLayout
-				.setVisibility((display(tr.getVisibility_capital())) ? View.VISIBLE
-						: View.GONE);
-		userZipLayout
-				.setVisibility((display(tr.getVisibility_zip())) ? View.VISIBLE
-						: View.GONE);
-		userAdr1Layout
-				.setVisibility((display(tr.getVisibility_adr1())) ? View.VISIBLE
-						: View.GONE);
-		userAdr2Layout
-				.setVisibility((display(tr.getVisibility_adr2())) ? View.VISIBLE
-						: View.GONE);
-		userCountryLayout
-				.setVisibility((display(tr.getVisibility_country())) ? View.VISIBLE
-						: View.GONE);
-		userMailLayout
-				.setVisibility((display(tr.getVisibility_mail())) ? View.VISIBLE
-						: View.GONE);
-		userPhoneLayout
-				.setVisibility((display(tr.getVisibility_tel())) ? View.VISIBLE
-						: View.GONE);
-
+		userNameLayout.setVisibility((display(tr.getVisibility_name())) ? View.VISIBLE: View.GONE);
+		userCapitalLayout.setVisibility((display(tr.getVisibility_capital())) ? View.VISIBLE: View.GONE);
+		userZipLayout.setVisibility((display(tr.getVisibility_zip())) ? View.VISIBLE: View.GONE);
+		userAdr1Layout.setVisibility((display(tr.getVisibility_adr1())) ? View.VISIBLE: View.GONE);
+		userAdr2Layout.setVisibility((display(tr.getVisibility_adr2())) ? View.VISIBLE: View.GONE);
+		userCountryLayout.setVisibility((display(tr.getVisibility_country())) ? View.VISIBLE: View.GONE);
+		userMailLayout.setVisibility((display(tr.getVisibility_mail())) ? View.VISIBLE: View.GONE);
+		userPhoneLayout.setVisibility((display(tr.getVisibility_tel())) ? View.VISIBLE: View.GONE);
+		userNoteLayout.setVisibility((display(tr.getVisibility_note())) ? View.VISIBLE: View.GONE);
+		
+	}
+	
+	private void setPriceAndName(){
 		// 値段
 		objectPrice.setText(String.valueOf(tr.getAmount()) + "円");
-
+		
+		if(tr.getItemId()!= null)
+		objectName.setText(tr.getItemId());
+		else
+		objectName.setVisibility(View.GONE);
+			
 	}
 
 	/*
@@ -367,13 +375,6 @@ public class PaymentActivity extends Activity {
 		return mandatoriesFields;
 	}
 	
-	public void sendBroadcastCancelSettlement(){
-		Intent intent = new Intent();
-		intent.setAction(Consts.RESPONSE_PAYMENT);
-		intent.putExtra(Consts.RESPONSE_STATE_DATA,	Consts.RESPONSE_STATE_DATA_CANCEL);
-		sendBroadcast(intent);
-	}
-
 	/*「戻る」ボタンクリック*/
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -381,6 +382,13 @@ public class PaymentActivity extends Activity {
 			sendBroadcastCancelSettlement();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void sendBroadcastCancelSettlement(){
+		Intent intent = new Intent();
+		intent.setAction(Consts.RESPONSE_PAYMENT);
+		intent.putExtra(Consts.RESPONSE_DATA, new TransactionResult(Consts.RESPONSE_STATE_DATA_CANCEL));
+		sendBroadcast(intent);
 	}
 
 }

@@ -25,7 +25,6 @@ public class TransactionRequest implements Parcelable {
 	//任意項目
 	public String customerId;
 	public String customerPass;
-	public String note;
 	public String transactionId;
 	public String itemId;
 	
@@ -38,6 +37,7 @@ public class TransactionRequest implements Parcelable {
 	public int visibility_mail;
 	public int visibility_country;	
 	public int visibility_tel;
+	public int visibility_note;
 	
 	//クイックチャージで利用
 	public String cardName;
@@ -64,8 +64,7 @@ public class TransactionRequest implements Parcelable {
 		dest.writeString(this.siteId);
 		dest.writeString(this.sitePass);
 		dest.writeString(this.customerId);
-		dest.writeString(this.customerPass);
-		dest.writeString(this.note);
+		dest.writeString(this.customerPass);		
 		dest.writeString(this.transactionId);
 		dest.writeString(this.itemId);
 		
@@ -79,6 +78,7 @@ public class TransactionRequest implements Parcelable {
 		dest.writeInt(this.visibility_mail);
 		dest.writeInt(this.visibility_country);
 		dest.writeInt(this.visibility_tel);
+		dest.writeInt(this.visibility_note);
 
 		dest.writeString(this.cardName);
 		dest.writeString(this.cardNo);
@@ -96,12 +96,10 @@ public class TransactionRequest implements Parcelable {
 		this.sitePass = in.readString();
 		this.customerId = in.readString();
 		this.customerPass = in.readString();
-		this.note = in.readString();
 		this.transactionId = in.readString();
 		this.itemId = in.readString();
 		
-		this.amount = in.readInt();		
-		
+		this.amount = in.readInt();
 		this.visibility_zip = in.readInt();
 		this.visibility_capital = in.readInt();
 		this.visibility_adr1 = in.readInt();
@@ -110,12 +108,12 @@ public class TransactionRequest implements Parcelable {
 		this.visibility_mail = in.readInt();
 		this.visibility_country = in.readInt();
 		this.visibility_tel = in.readInt();
+		this.visibility_note= in.readInt();
 		
 		this.cardName = in.readString();
 		this.cardNo = in.readString();
 		this.cardMonth = in.readString();
 		this.cardYear = in.readString();
-
 		
 	}
 
@@ -266,15 +264,7 @@ public class TransactionRequest implements Parcelable {
 	public void setCardYear(String cardYear) {
 		this.cardYear = cardYear;
 	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
+	
 	public String getTransactionId() {
 		return transactionId;
 	}
@@ -297,6 +287,14 @@ public class TransactionRequest implements Parcelable {
 
 	public void setQuickChargeStatus(int quickChargeStatus) {
 		this.quickChargeStatus = quickChargeStatus;
+	}
+
+	public int getVisibility_note() {
+		return visibility_note;
+	}
+
+	public void setVisibility_note(int visibility_note) {
+		this.visibility_note = visibility_note;
 	}
 	
 }

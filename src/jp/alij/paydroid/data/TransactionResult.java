@@ -14,8 +14,12 @@ public class TransactionResult implements Parcelable {
 	public String msg;
 	public String TransactionId;
 	public int state ;
-	
+		
 	public TransactionResult() {}
+	
+	public TransactionResult(int s){
+		this.state=s;
+	}
 	
 	public TransactionResult(Parcel in) {
 		readFromParcel(in);

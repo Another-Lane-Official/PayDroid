@@ -77,13 +77,15 @@ public class OnClickSettlement implements OnClickListener {
 	 * 設定可能な項目
 	 */
 	private boolean validateData() {
-		ArrayList<EditText> al = mActivity.getMandoriesFields();
+		ArrayList<EditText> al = mActivity.getMandoriesFields();		
 		
 		//必須項目チェック
-		for (EditText et : al) {
-			if (et.getText().toString().equals("")) {
-				displayError(mActivity.getString(jp.alij.paydroid.R.string.mandatory_parameters_issue));
-				return false;
+		if(al!=null && al.size()!=0){			
+			for (EditText et : al) {
+				if (et.getText().toString().equals("")) {
+					displayError(mActivity.getString(jp.alij.paydroid.R.string.mandatory_parameters_issue));
+					return false;
+				}
 			}
 		}
 		
@@ -188,10 +190,11 @@ public class OnClickSettlement implements OnClickListener {
 			hm.put(APIConnection.NAME_PARAM, mActivity.userNameEdit.getText().toString());
 			hm.put(APIConnection.TEL_PARAM, mActivity.userPhoneEdit.getText().toString());
 			hm.put(APIConnection.MAIL_PARAM, mActivity.userMailEdit.getText().toString());
+			hm.put(APIConnection.NOTE_PARAM, mActivity.userNoteEdit.getText().toString());
+			hm.put(APIConnection.COUNTRY_PARAM, mActivity.userCountryEdit.getText().toString());
 		}
 		
 		//その他の項目
-		hm.put(APIConnection.NOTE_PARAM, mActivity.tr.getNote());
 		hm.put(APIConnection.TRANS_ID_PARAM, mActivity.tr.getTransactionId());
 		hm.put(APIConnection.ITEM_ID_PARAM, mActivity.tr.getItemId());
 		

@@ -70,6 +70,8 @@
 
 PayDroid方式は、加盟店様のAndroidアプリ内にSDKを組み込んでいただくことで、**簡単にアプリ内課金を実施いただきます**。
 
+ ![PayDroid by Another Lane inc](http://s22.postimg.org/p23njqns1/Screenshot_2014_07_08_11_26_05.png "PayDroid by Another Lane inc")
+
 弊社システムで決済処理終了後、**決済結果をリダイレクト**（返信）します。
 
 加盟店様では、送られて来た決済結果を解析し、決済結果に応じた処理を行ってください。
@@ -186,9 +188,12 @@ https://github.com/Another-Lane-Official/PayDroid.git からダウンロード
 TransactionRequest tr = new TransactionRequest();
 
 //必須パラメータ
-tr.setAmount(210);	　　　　　　　//金額
-tr.setSiteId("99999928");　　　//加盟店ID
-tr.setSitePass("qYhWsRLH"); //加盟店パスワード
+tr.setAmount(210);	　　　　　　　   //金額
+tr.setSiteId("99999928");　　　  //加盟店ID
+tr.setSitePass("qYhWsRLH");   //加盟店パスワード
+
+//アイテム名の表示・非表示
+tr.setItemId("私のアイテムです"); //itemIdを設定しない場合は表示されません
 
 /*
  * 任意パラメータ

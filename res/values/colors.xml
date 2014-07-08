@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 決済ボタン -->
+    <color name="green_button">#9BF193</color>
+    <color name="green_button_stroke">#75E06C</color>
+    <color name="green_button_pressed">#75E06C</color>
+    
+    <!-- キャンセルボタン -->
+    <color name="red_button">#FFE0D7</color>
+    <color name="red_button_stroke">#FFB9A6</color>
+    <color name="red_button_pressed">#FFB9A6</color>
+    
+    <!-- 商品名 -->
+    <color name="product_name">#B9DCF0</color>
+    <color name="product_name_pressed">#8CCCF2</color>
+    
+    
+     <!-- 値段 -->
+     <color name="price">#D2E4EF</color>
+    <color name="price_pressed">#C1DEEE</color>
+    
+    <!-- other -->
+    <color name="text_white">#ffffff</color>
+    <color name="field_label">#61778C</color>
+    
+    
+</resources>
