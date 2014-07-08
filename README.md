@@ -299,8 +299,8 @@ tr.setCustomerPass("xxxxxxxx");
 //カード関連パラメータ
 tr.setCardName("xxx");
 tr.setCardNo("xxxxxxxxxxxxxxxx");
-tr.setCardMonth("xx");
-tr.setCardYear("xx");
+tr.setCardMonth("MM");
+tr.setCardYear("YY");
 
 CustomerChange customerChange = new CustomerChange(this, tr, new CustomerChangeCallback() {
 	@Override
