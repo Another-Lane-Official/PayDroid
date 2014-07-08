@@ -189,11 +189,11 @@ TransactionRequest tr = new TransactionRequest();
 
 //必須パラメータ
 tr.setAmount(210);	　　　　　　　   //金額
-tr.setSiteId("99999928");　　　  //加盟店ID
-tr.setSitePass("qYhWsRLH");   //加盟店パスワード
+tr.setSiteId("xxxxxxxx");　　　  //加盟店ID
+tr.setSitePass("xxxxxxxx");   //加盟店パスワード
 
 //アイテム名の表示・非表示
-tr.setItemId("私のアイテムです"); //itemIdを設定しない場合は表示されません
+tr.setItemId("アイテム名"); //itemIdを設定しない場合は表示されません
 
 /*
  * 任意パラメータ
@@ -218,8 +218,8 @@ tr.setVisibility_capital(InputStatus.INPUT_STATUS_OPTIONAL);
 tr.setQuickChargeStatus(QuickChargeStatus.QUICK_CHARGE_FIRST_TIME);
 
 //契約に合わせて, idとpass(もしくはメール)を渡す
-tr.setCustomerId("xxx");
-tr.setCustomerPass("fsdf"); //customerPassかCustomerMail
+tr.setCustomerId("xxxxxxxx");
+tr.setCustomerPass("xxxxxxxx"); //customerPassかCustomerMail
 ```
 
 ##### 二度も以降の決済
@@ -231,8 +231,8 @@ tr.setSiteId("99999928");
 tr.setSitePass("qYhWsRLH");    		
 
 //契約に合わせて, idとpass(もしくはメール)を渡す
-tr.setCustomerId("xxx");
-tr.setCustomerPass("fsdf");
+tr.setCustomerId("xxxxxxxx");
+tr.setCustomerPass("xxxxxxxx");
 
 //クイックチャージフラッグ
 tr.setQuickChargeStatus(QuickChargeStatus.QUICK_CHARGE_SECOND_TIME_AND_MORE);
@@ -289,18 +289,18 @@ private class SettlementReceiver extends BroadcastReceiver {
 ```java
 
 //加盟店様関連パラメータ
-tr.setSiteId("99999928");
-tr.setSitePass("qYhWsRLH"); 
+tr.setSiteId("xxxxxxxx");
+tr.setSitePass("xxxxxxxx"); 
 
 //顧客関連パラメータ
-tr.setCustomerId("xxx");
-tr.setCustomerPass("fsdf");
+tr.setCustomerId("xxxxxxxx");
+tr.setCustomerPass("xxxxxxxx");
 
 //カード関連パラメータ
-tr.setCardName("test");
-tr.setCardNo("44444444444444444");
-tr.setCardMonth("12");
-tr.setCardYear("18");
+tr.setCardName("xxx");
+tr.setCardNo("xxxxxxxxxxxxxxxx");
+tr.setCardMonth("xx");
+tr.setCardYear("xx");
 
 CustomerChange customerChange = new CustomerChange(this, tr, new CustomerChangeCallback() {
 	@Override
