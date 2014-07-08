@@ -31,7 +31,7 @@
 				● Activity修正
 				● クイックチャージご利用の場合
 					⇒ 初回決済
-					⇒ 二度も以降の決済
+					⇒ 二度目以降の決済
 				● 決済画面起動
 				● 決済完了後
 		III 会員カード情報変更
@@ -222,13 +222,13 @@ tr.setCustomerId("xxxxxxxx");
 tr.setCustomerPass("xxxxxxxx"); //customerPassかCustomerMail
 ```
 
-##### 二度も以降の決済
+##### 二度目以降の決済
 
 ```java
 //必須パラメータ
 tr.setAmount(210);
-tr.setSiteId("99999928");
-tr.setSitePass("qYhWsRLH");    		
+tr.setSiteId("xxxxxxxx");
+tr.setSitePass("xxxxxxxx");    		
 
 //契約に合わせて, idとpass(もしくはメール)を渡す
 tr.setCustomerId("xxxxxxxx");
