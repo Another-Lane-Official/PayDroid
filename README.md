@@ -70,7 +70,7 @@
 
 PayDroid方式は、加盟店様のAndroidアプリ内にSDKを組み込んでいただくことで、**簡単にアプリ内課金を実施いただきます**。
 
- ![PayDroid by Another Lane inc](http://s22.postimg.org/p23njqns1/Screenshot_2014_07_08_11_26_05.png "PayDroid by Another Lane inc")
+ ![PayDroid by Another Lane inc](http://s21.postimg.org/wse5nlwpz/pay_droid_capture.png =250x)
 
 弊社システムで決済処理終了後、**決済結果をリダイレクト**（返信）します。
 
